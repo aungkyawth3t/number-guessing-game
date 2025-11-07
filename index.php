@@ -65,7 +65,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GuessTheNumber</title>
+    <title>Guessonit</title>
     <link rel="stylesheet" href="style.css?v=<?= time() ?>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -73,7 +73,7 @@
 </head>
 <body>
     <div class="game-card">
-        <h1>Guess the Number!</h1>
+        <h1>Guessonit!</h1>
         
         <p> <?= $message ?> </p>
         <?php if($message == "Too high!"): ?>
@@ -86,10 +86,10 @@
         <p class="guess-count">Guesses: <strong> <?= $_SESSION['guess_count'] ?? 0 ?> </strong></p>
         <?php if(isset($_SESSION['secret_number'])): ?>
             <form class="game-form" action="index.php" method="POST">
-                <label for="guess"> Enter your guess (1 - 100) </label>
+                <label for="guess"> Enter your guess (1 - 10) </label>
                 <input type="number" id="guess" name="guess" min="1" max="100" placeholder="?" required>
                 <button type="submit" class="game-button" name="btn-guess">
-                    GUESS
+                    Guess
                 </button>
             </form>
         <?php else: ?>
