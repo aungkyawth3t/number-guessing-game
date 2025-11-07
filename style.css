@@ -5,9 +5,9 @@
 }
 
 body {
-   font-family: "Plus Jakarta Sans", monospace;
+  font-family: "Stack Sans Headline", sans-serif;
   font-optical-sizing: auto;
-  font-weight: 400;
+  font-weight: 300;
   font-style: normal;
   color: #ffffff;
   background: radial-gradient(circle at top left, #4c1d95, #1e1b4b);
@@ -142,12 +142,14 @@ input[type="number"]::-webkit-outer-spin-button {
     width: 100%;
     padding: 0.85rem 1rem;
     font-size: 1.125rem;
-    /* font-weight: 700; */
+    font-weight: 700;
     color: #ffffff;
+
     background-color: #7c3aed;
     border: none;
     border-radius: 0.5rem;
     cursor: pointer;
+
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
 }
