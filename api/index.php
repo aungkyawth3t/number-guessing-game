@@ -1,7 +1,9 @@
 <?php
     session_start();
     $message = "";
+    $new_game = "";
     $hint = "";
+    $feedback_class = "";
 
     function resetGame() {
         unset($_SESSION['secret_number'], $_SESSION['guess_count'], $_SESSION['last_guess']);
@@ -17,7 +19,7 @@
         $_SESSION['secret_number'] = rand(1, 10);
         $_SESSION['guess_count'] = 0;
         $_SESSION['last_guess'] = null;
-        $message = "New game! I'm thinking of a number from 1 to 10.";
+        $new_game = "New game! I've thought a number from 1 to 10.";
     }
 
     if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['guess'])) {
@@ -27,33 +29,17 @@
 
         if($guess == $secret_number) {
             $message = "Congratulations! You guessed it in {$_SESSION['guess_count']} tries!";
+            $feedback_class = "win";
             unset($_SESSION['secret_number']);
             unset($_SESSION['last_guess']);
         }
         elseif($guess < $secret_number) {
             $message = "Too low!";
+            $feedback_class = "too-low";
         }
         elseif($guess > $secret_number) {
             $message = "Too high!";
-        }
-
-        // hint
-        if($guess !== $secret_number) {
-            $newDistance = abs($secret_number - $guess);
-            if(isset($_SESSION['last_guess'])) {
-                $oldDistance = abs($secret_number - $_SESSION['last_guess']);
-            } else {
-                $oldDistance = null;
-            }
-            if ($oldDistance === null) {
-                $hint = "Let's see how close you are!";
-            } elseif ($newDistance < $oldDistance) {
-                $hint = "You're getting warmer!";
-            } elseif ($newDistance > $oldDistance) {
-                $hint = "You're getting colder!";
-            } else {
-                $hint = "Same distance as before!";
-            }
+            $feedback_class = "too-high";
         }
         $_SESSION['last_guess'] = $guess;
     }
@@ -65,7 +51,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guessonit</title>
+    <title>GUESSONITT</title>
     <link rel="stylesheet" href="../style.css?= time() ?>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -73,21 +59,21 @@
 </head>
 <body>
     <div class="game-card">
-        <h1>Guessonit!</h1>
+        <h1>GUESSONITT</h1>
+
+            <p> <?= $new_game ?> </p>
         
-        <p> <?= $message ?> </p>
-        <?php if($message == "Too high!"): ?>
-            <h2 class="feedback-message too-high"> <?= $message ?> </h2>
-        <?php elseif($message == "Too Low!"): ?>
-            <h2 class="feedback-message too-low"> <?= $message ?> </h2>
+        <?php if($feedback_class != ""): ?>
+            <h2 class="feedback-message <?= $feedback_class ?>"> <?= $message ?> </h2>
+        <?php else : ?>
+            <p class="general-message"> <?= $message ?> </p>
         <?php endif ?>
 
-        <p class="hint-message"> <?= $hint ?> </p>
-        <p class="guess-count">Guesses: <strong> <?= $_SESSION['guess_count'] ?? 0 ?> </strong></p>
+        <p class="guess-count">Guess: <strong> <?= $_SESSION['guess_count'] ?? 0 ?> </strong></p>
         <?php if(isset($_SESSION['secret_number'])): ?>
             <form class="game-form" action="index.php" method="POST">
                 <label for="guess"> Enter your guess (1 - 10) </label>
-                <input type="number" id="guess" name="guess" min="1" max="100" placeholder="?" required>
+                <input type="number" id="guess" name="guess" min="1" max="10" placeholder="?" required>
                 <button type="submit" class="game-button" name="btn-guess">
                     Guess
                 </button>

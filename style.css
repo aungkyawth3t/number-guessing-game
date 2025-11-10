@@ -66,9 +66,9 @@ h1 {
 }
 
 .feedback-message {
-    font-size: 3rem;
+    font-size: 2rem;
     font-weight: 700;
-    margin: 1.5rem 0;
+    margin-bottom: 10px;
 }
 
 .feedback-message.too-high {
@@ -93,7 +93,7 @@ h1 {
 
 .guess-count {
     font-size: 1.25rem;
-    margin-bottom: 1.5rem;
+    margin: 20px;
 }
 
 .guess-count strong {
